@@ -2,6 +2,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Welcome extends CI_Controller {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->library('session');
+		$this->load->library('twig');
+		$this->load->helper('url');
+
+		$this->twig->addGlobal('sitename', 'regstry');
+		$this->twig->addGlobal('sitetitle', 'regstry');
+	}
 
 	/**
 	 * Index Page for this controller.
@@ -20,7 +30,9 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		//$this->load->view('welcome_message');
-		$this->load->view('public/index');
+		$data = array();
+		$data['year'] = date('Y');
+
+		$this->twig->display('public/index', $data);
 	}
 }
